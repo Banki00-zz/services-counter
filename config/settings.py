@@ -97,10 +97,12 @@ AUTH_PASSWORD_VALIDATORS = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'maindb',
-        'USER': 'banki00',
-        'PASSWORD': '123456',
-        'HOST': '127.0.0.1',
+        'NAME': 'd46c2joejnfmf5
+',
+        'USER': 'uyimxxaznvlrhv',
+        'PASSWORD': '6cbf17a063d44b05eda2e53823a28d78d603c5e501581175f388e2c5aff07005
+',
+        'HOST': 'ec2-52-45-73-150.compute-1.amazonaws.com',
         'PORT': '5432',
     }
 }
