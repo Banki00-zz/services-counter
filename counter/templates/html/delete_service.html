@@ -3,13 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Delete</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body{
+            background-color: #638CB8;
+        }
+
+        .submit{
+            background-color: #6BA3E8;
+        }
+
+        .center-column{
+            width:600px;
+            margin: 20px auto;
+            padding:20px;
+            background-color: #fff;
+            border-radius: 3px;
+            box-shadow: 6px 2px 30px 0px rgba(0,0,0,0.75);
+        }
+
+        .gen-btn{
+            display: table-cell;
+        }
+
+        .btn-danger{
+            background-color: #ffae19;
+            border-color: #e59400;
+        }
+    </style>
 </head>
 <body>
+<div class="center-column">
+    <div class="todo-list">
         <h3>Точно ты хочешь удалить эту запись?</h3>
-        <a href="{% url 'index' %}">Отмена</a>
         <form method="POST" action="">
             {% csrf_token %}
-            <button type="submit">Удалить</button>
+        <div class="gen-btn">
+            <a class="btn btn-sm btn-info" href="{% url 'index' %}">Отмена</a>
+            <button class="btn btn-sm btn-danger" type="submit">Удалить</button>
+        </div>
         </form>
+    </div>
+</div>
 </body>
 </html>
