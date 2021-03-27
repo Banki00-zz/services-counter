@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete</title>
+</head>
+<body>
+        <h3>Точно ты хочешь удалить эту запись?</h3>
+        <a href="{% url 'index' %}">Отмена</a>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <button type="submit">Удалить</button>
+        </form>
+</body>
+</html>
