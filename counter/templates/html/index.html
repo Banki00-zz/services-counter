@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load static %}
+{% load bootstrap_tags %}
+
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+    <style>
+
+    </style>
+</head>
+<body>
+    <div class="center-column">
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{form|as_bootstrap}}
+            <input type="submit" class="btn btn-outline-success" value="Добавить">
+        </form>
+<div class="todo-list">
+    {% for service in services %}
+        <div class="item-row">
+            <div class="spec">
+                <p>{{service}} {{service.date_add|date:"d M Y"}}</p>
+                <p>Стоймость: {{service.price}}р.</p>
+                <p>На руки: {{service.sum_for_worker}}р.</p>
+            </div>
+            <div class="gen-btn">
+                <a class="btn btn-sm btn-info" href="{% url 'update_service' service.id %}">Изменить</a>
+                <a class="btn btn-sm btn-danger" href="{% url 'delete_service' service.id %}">Удалить</a>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+</body>
+</html>
