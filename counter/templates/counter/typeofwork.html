@@ -1,0 +1,20 @@
+
+{% extends 'counter/main.html' %}
+
+{% block content %}
+<h3>Список услуг</h3>
+<td><a href="{% url 'work_create' %}">Добавить</a></td>
+<table>
+        {% for work in typeofwork %}
+    <tr>
+        <td>
+        {{work.title}}
+        </td>
+        <td><a href="{% url 'work_detail' work.id %}">Просмотреть</a></td>
+        <td><a href="{% url 'work_update' work.id %}">Изменить</a></td>
+        <td><a href="{% url 'work_delete' work.id %}">Удалить</a></td>
+    </tr>
+        {% endfor %}
+</table>
+<a href="{% url 'services' %}">Назад</a>
+{% endblock content %}

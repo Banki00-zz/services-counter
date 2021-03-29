@@ -1,0 +1,11 @@
+
+{% extends 'counter/main.html' %}
+
+{% block content %}
+<a href="{% url 'typeofwork' %}">Назад</a>
+<form method="POST">
+    {% csrf_token %}
+    <p>Точно удаляем?</p>
+    <input type="submit" value="Удалить">
+</form>
+{% endblock content %}

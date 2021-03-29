@@ -1,0 +1,12 @@
+{% extends 'counter/main.html' %}
+
+{% block content %}
+<h3>Services form</h3>
+
+<form method="POST" action="">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Подтвердить">
+</form>
+<a href="{% url 'services' %}">Назад</a>
+{% endblock content %}
