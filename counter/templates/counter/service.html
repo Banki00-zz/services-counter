@@ -1,1 +1,6 @@
+{% extends 'counter/main.html' %}
+
+{% block content %}
 <h1>Services: {{service}}</h1>
+<a href="{% url 'services' %}">Назад</a>
+{% endblock content %}

@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-import django_heroku
 from pathlib import Path
 import os
 
@@ -26,7 +25,7 @@ SECRET_KEY = '&99qa06saxbbb9sa&d!1-o2d390!da68k6a7(aq1jff&^ng)vh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 INSTALLED_APPS = [
@@ -37,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_forms_bootstrap',
-    'counter',
+    'counter.apps.CounterConfig',
 ]
 
 MIDDLEWARE = [
@@ -96,17 +95,25 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'd46c2joejnfmf5',
+#         'USER': 'uyimxxaznvlrhv',
+#         'PASSWORD': '6cbf17a063d44b05eda2e53823a28d78d603c5e501581175f388e2c5aff07005',
+#         'HOST': 'ec2-52-45-73-150.compute-1.amazonaws.com',
+#         'PORT': '5432',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd46c2joejnfmf5',
-        'USER': 'uyimxxaznvlrhv',
-        'PASSWORD': '6cbf17a063d44b05eda2e53823a28d78d603c5e501581175f388e2c5aff07005',
-        'HOST': 'ec2-52-45-73-150.compute-1.amazonaws.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db',
+
     }
 }
 
+LOGIN_URL = 'login'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 

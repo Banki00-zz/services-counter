@@ -13,7 +13,7 @@ class TypeOfWorkForm(ModelForm):
 
 class AddServiceForm(ModelForm):
     class Meta:
-        model = AddService
+        model = ServicesList
         fields = ['price', 'service']
         labels = {
             'service': _('Услуга'),
