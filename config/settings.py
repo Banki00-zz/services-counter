@@ -33,6 +33,7 @@ LANGUAGE_CODE = 'ru-RU'
 
 ALLOWED_HOSTS = ['*']
 
+TIME_ZONE = 'Europe/Moscow'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
