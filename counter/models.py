@@ -19,10 +19,11 @@ class TypeOfWork(models.Model):
 
 
 class Services(models.Model):
-    price = models.IntegerField()
+    price = models.IntegerField(verbose_name='Цена')
+    sale = models.IntegerField(verbose_name='Скидка', blank=True, null=True)
     sum_for_worker = models.IntegerField(blank=True, null=True)
-    service = models.ForeignKey(TypeOfWork, on_delete=models.CASCADE)
-    date_add = models.DateTimeField(auto_now_add=True, null = True)
+    service = models.ForeignKey(TypeOfWork, on_delete=models.CASCADE, verbose_name='Услуга')
+    date_add = models.DateTimeField(auto_now_add=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):

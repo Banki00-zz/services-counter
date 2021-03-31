@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 from pathlib import Path
 import os
+from django.conf.locale.ru import formats as ru_formats
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,6 +26,10 @@ SECRET_KEY = '&99qa06saxbbb9sa&d!1-o2d390!da68k6a7(aq1jff&^ng)vh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+USE_I18N = True
+USE_L10N = False
+LANGUAGE_CODE = 'ru-RU'
 
 ALLOWED_HOSTS = ['*']
 
@@ -98,10 +104,10 @@ AUTH_PASSWORD_VALIDATORS = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd46c2joejnfmf5',
-        'USER': 'uyimxxaznvlrhv',
-        'PASSWORD': '6cbf17a063d44b05eda2e53823a28d78d603c5e501581175f388e2c5aff07005',
-        'HOST': 'ec2-52-45-73-150.compute-1.amazonaws.com',
+        'NAME': 'd1o6n4et1u9gev',
+        'USER': 'ovkzfpqboaluwu',
+        'PASSWORD': '1be33179503d9118096165a5c39ff73a47a76544d5411b2e0d69cc734813c54c',
+        'HOST': 'ec2-23-22-191-232.compute-1.amazonaws.com',
         'PORT': '5432',
     }
 }

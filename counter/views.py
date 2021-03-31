@@ -1,3 +1,6 @@
+import datetime
+
+from django.db.models import Sum
 from django.shortcuts import redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -12,6 +15,7 @@ from .models import Services, TypeOfWork
 
 # Create your views here.
 class CustomLoginView(LoginView):
+    """Форма авторизации с переадресацией"""
     template_name = 'counter/login.html'
     fields = '__all__'
     redirect_authenticated_user = True
@@ -21,30 +25,38 @@ class CustomLoginView(LoginView):
 
 
 class RegisterPage(FormView):
+    """Форма регистрации"""
     template_name = 'counter/register.html'
     form_class = UserCreationForm
     redirect_authenticated_user = True
     success_url = reverse_lazy('services')
 
     def form_valid(self, form):
+        """Логирование после регистрации"""
         user = form.save()
         if user is not None:
             login(self.request, user)
         return super(RegisterPage, self).form_valid(form)
 
     def get(self, *args, **kwargs):
+        """Если пользователь зареган, редирект на глав. страницу"""
         if self.request.user.is_authenticated:
             return redirect('services')
         return super(RegisterPage, self).get(*args, **kwargs)
 
 
 class ServicesList(LoginRequiredMixin, ListView):
+    """Список оказанных услуг"""
     model = Services
     context_object_name = 'services'
 
     def get_context_data(self, **kwargs):
+        """Фильтруем услуги по пользователю и подсчет зп"""
         context = super().get_context_data(**kwargs)
-        context['services'] = context['services'].filter(user=self.request.user)
+        month = datetime.date.today().month
+        context['services'] = context['services'].filter(user=self.request.user, date_add__month=month).order_by('-date_add')
+        context['count'] = Services.objects.filter(user=self.request.user, date_add__month=month).aggregate(Sum('sum_for_worker'))
+
         return context
 
 
@@ -56,7 +68,7 @@ class ServicesDetail(LoginRequiredMixin, DetailView):
 
 class ServicesCreate(LoginRequiredMixin, CreateView):
     model = Services
-    fields = ['price', 'service']
+    fields = ['price', 'sale', 'service']
     success_url = reverse_lazy('services')
 
     def get_context_data(self, **kwargs):
@@ -74,13 +86,13 @@ class ServicesCreate(LoginRequiredMixin, CreateView):
 
 class ServicesUpdate(LoginRequiredMixin, UpdateView):
     model = Services
-    fields = ['price', 'service']
+    fields = ['price', 'sale', 'service']
     success_url = reverse_lazy('services')
 
     def get_context_data(self, **kwargs):
         context = super(ServicesUpdate, self).get_context_data(**kwargs)
         username = self.request.user
-        context['form'].fields['service'].queryset = TypeOfWork.objects.all().filter(user__username=username)
+        context['form'].fields['service'].queryset = TypeOfWork.objects.filter(user__username=username)
         return context
 
     def form_valid(self, form):
@@ -143,4 +155,10 @@ def percent_sum(request):
     percent = typeser.fix_percent
     sum_for_service = request.POST['price']
     end_sum = int(sum_for_service) / 100 * percent
-    return end_sum
+    if request.POST.get('sale'):
+        sale = request.POST['sale']
+        sum_with_sale = end_sum / 100 * int(sale)
+        end_sum = end_sum - sum_with_sale
+        return end_sum
+    else:
+        return end_sum

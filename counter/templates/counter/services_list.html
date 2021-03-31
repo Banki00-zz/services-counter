@@ -1,32 +1,40 @@
 {% extends 'counter/main.html' %}
-
 {% block content %}
-
 <div class="header-bar">
     <div>
-        <h1>Hello {{request.user|title}}</h1>
-        <h3 style="margin: 0"><i>Сюда впишу сумму за месяц</i></h3>
+        <h2>Привет {{request.user}}</h2>
+        {% if count.sum_for_worker__sum == None%}
+        <h3 style="margin: 0;"><i>Сумма за {% now "F" %}: 0 р.</i></h3>
+        {% else %}
+        <h3 style="margin: 0;"><i>Сумма за {% now "F" %}: {{count.sum_for_worker__sum}} р.</i></h3>
+        {% endif %}
     </div>
-    {% if request.user.is_authenticated %}
-    <a href="{% url 'logout' %}">Выйти</a>
-    {% else %}
-    <a href="{% url 'login' %}">Войти</a>
-    {% endif %}
+    <div>
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'logout' %}">Выйти</a>
+        {% else %}
+        <a href="{% url 'login' %}">Войти</a>
+        {% endif %}
+    </div>
 </div>
 
 <div class="add-wrapper">
     <a class="add-link" href="{% url 'create-service' %}">Добавить</a>
-        <a class="add-link" style="color: black;">Список последних работ</a>
     <a class="add-link"href="{% url 'typeofwork' %}">Список услуг</a>
 </div>
 
 
 <div class="services-items-wrapper">
     {% for service in services %}
-        <div class="services-wrapper">
-            {{service}}
-            {{service.price}}
-            {{service.sum_for_worker}}
+        <div class="services-wrapper" style="text-align: justify;">
+            {{service}} | Дата добавления: {{service.date_add|date:"d E y"}}<br>
+            Цена: {{service.price}} р.<br>
+            {% if service.sale %}
+                Скидка: {{service.sale}}<br>
+            {% else %}
+            Без скидок<br>
+            {% endif %}
+            Сумма на руки: {{service.sum_for_worker}} р.
             <a class="delete-link" href="{% url 'service-delete' service.id %}">&#215</a>
         </div>
         <div class="services-settings">
@@ -34,16 +42,9 @@
             <a href="{% url 'service-update' service.id %}">Изменить</a>
         </div>
     {% empty %}
-    <h3>Нет записей</h3>
+    <h3 align="center">Нет записей</h3>
     {% endfor %}
 </div>
-
-<table>
-    <tr>
-
-
-    </tr>
-
-</table>
+<h3 class="text-head" style="text-align: center; border-top: 1px solid #dfe4ea;">Список последних услуг</h3>
 {% endblock content %}
 

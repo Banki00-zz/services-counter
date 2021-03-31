@@ -13,9 +13,8 @@ urlpatterns = [
     path('service-delete/<int:pk>/', ServicesDelete.as_view(), name="service-delete"),
     path('create-service/', ServicesCreate.as_view(), name="create-service"),
     path('type-of-work/', TypeOfWorkList.as_view(), name="typeofwork"),
-    path('work_detail/<int:pk>/', TypeOfWorkDetail.as_view(), name="work_detail"),
     path('work_create/', TypeOfWorkCreate.as_view(), name="work_create"),
+    path('work_detail/<int:pk>/', TypeOfWorkDetail.as_view(), name="work_detail"),
     path('work-update/<int:pk>/', TypeOfWorkUpdate.as_view(), name="work_update"),
-    path('work-delete/<int:pk>/', TypeOfWorkDetail.as_view(), name="work_delete"),
-
+    path('work-delete/<int:pk>/', TypeOfWorkDelete.as_view(), name="work_delete"),
 ]
