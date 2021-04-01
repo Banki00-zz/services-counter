@@ -19,14 +19,15 @@
 </div>
 
 <div class="add-wrapper">
+        <a class="add-link" href="{% url 'create-service' %}">Добавить</a>
     <div class="search-area">
         <form method="GET" >
             <input type="month" name="search-area" value="{{search_input}}">
             <input style="margin: 0px 5px" type="submit" value="Поиск">
         </form>
     </div>
-    <a class="add-link" href="{% url 'create-service' %}">Добавить</a>
-    <a class="add-link" href="{% url 'typeofwork' %}">Список услуг</a>
+        <a class="add-link" href="{% url 'typeofwork' %}">Список услуг</a>
+
 </div>
 
 
