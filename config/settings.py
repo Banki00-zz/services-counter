@@ -32,7 +32,6 @@ USE_I18N = True
 USE_L10N = False
 LANGUAGE_CODE = 'ru-RU'
 DATE_FORMAT = 'd m Y'
-locale.setlocale(locale.LC_ALL, "ru_RU.utf8")
 
 
 ALLOWED_HOSTS = ['*']
