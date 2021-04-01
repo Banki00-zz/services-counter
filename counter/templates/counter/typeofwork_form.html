@@ -1,9 +1,16 @@
-{% extends 'counter/main.html' %} {% block content %}
-<h3>Work form</h3>
+{% extends 'counter/main.html' %}
+{% block content %}
 
-<form method="POST" action="">
-  {% csrf_token %} {{form.as_p}}
-  <input type="submit" value="Подтвердить" />
-</form>
-<a href="{% url 'typeofwork' %}">Назад</a>
+<div class="header-bar">
+  <h3>Новая услуга</h3>
+  <a href="{% url 'typeofwork' %}">Назад</a>
+</div>
+
+<div class="card-body">
+  <form method="POST" action="">
+    {% csrf_token %} {{form.as_p}}
+    <input class="button" type="submit" value="Подтвердить" />
+  </form>
+</div>
+
 {% endblock content %}

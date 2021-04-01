@@ -1,15 +1,15 @@
 {% extends 'counter/main.html' %}
 {% block content %}
 <div class="header-bar">
-    <div>
-        <h2>Привет {{request.user}}</h2>
+    <div style="padding: 10px;">
+        <i><a href="{% url 'services' %}" style="padding: 0px; font-size: 20px; font-weight: bold;">Привет {{request.user}}</a></i>
         {% if count.sum_for_worker__sum == None%}
-        <h3 style="margin: 0;"><i>Сумма за {% now "F" %}: 0 р.</i></h3>
+        <h3 style="margin: 0;"><i>Сумма за месяц: 0 р.</i></h3>
         {% else %}
-        <h3 style="margin: 0;"><i>Сумма за {% now "F" %}: {{count.sum_for_worker__sum}} р.</i></h3>
+        <h3 style="margin: 0;"><i>Сумма за месяц: {{count.sum_for_worker__sum}} р.</i></h3>
         {% endif %}
     </div>
-    <div>
+    <div class="header-log">
         {% if request.user.is_authenticated %}
         <a href="{% url 'logout' %}">Выйти</a>
         {% else %}
@@ -19,12 +19,18 @@
 </div>
 
 <div class="add-wrapper">
+    <div class="search-area">
+        <form method="GET" >
+            <input type="month" name="search-area" value="{{search_input}}">
+            <input style="margin: 0px 5px" type="submit" value="Поиск">
+        </form>
+    </div>
     <a class="add-link" href="{% url 'create-service' %}">Добавить</a>
-    <a class="add-link"href="{% url 'typeofwork' %}">Список услуг</a>
+    <a class="add-link" href="{% url 'typeofwork' %}">Список услуг</a>
 </div>
 
 
-<div class="services-items-wrapper">
+<div id='serviceslist' class="services-items-wrapper">
     {% for service in services %}
         <div class="services-wrapper" style="text-align: justify;">
             {{service}} | Дата добавления: {{service.date_add|date:"d E y"}}<br>
@@ -38,7 +44,7 @@
             <a class="delete-link" href="{% url 'service-delete' service.id %}">&#215</a>
         </div>
         <div class="services-settings">
-            <a href="{% url 'service' service.id %}">Просмотреть</a>
+<!--            <a href="{% url 'service' service.id %}">Просмотреть</a>-->
             <a href="{% url 'service-update' service.id %}">Изменить</a>
         </div>
     {% empty %}
@@ -46,5 +52,6 @@
     {% endfor %}
 </div>
 <h3 class="text-head" style="text-align: center; border-top: 1px solid #dfe4ea;">Список последних услуг</h3>
+
 {% endblock content %}
 

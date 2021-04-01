@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Services List</title>
     <meta name="viewport" initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,13 +41,21 @@
             display: flex;
             justify-content: space-between;
             color: #fff;
-            padding: 10px;
+            padding: 10px 10px;
             border-radius: 5px 5px 0 0;
             background: linear-gradient(90deg, #EEA390 0%, #EB796F 43%, #EB796F 100%);
         }
 
         .header-bar a {
+            font-size: 15px;
             padding: 25px 10px;
+            color: rgb(247, 247, 247);
+            text-decoration: none;
+        }
+
+        .header-log a {
+            font-size: 15px;
+            margin: 20px;
             color: rgb(247, 247, 247);
             text-decoration: none;
         }
@@ -61,6 +70,15 @@
             overflow: hidden;
         }
 
+        .work-wrapper {
+            display: flex;
+            padding: 0px 15px;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #fff;
+            border-top: 1px solid #dfe4ea;
+        }
+
         .services-settings {
             display: flex;
             padding: 0px 10px 10px 10px;
@@ -70,10 +88,7 @@
             overflow: hidden;
             text-decoration: none;
         }
-        .services-title {
-            display: flex;
-            padding: 20px;
-        }
+
 
         .services-title a {
             text-decoration: none;
@@ -91,35 +106,6 @@
         }
 
         /*Handle Classes*/
-
-        .handle {
-            display: inline-block;
-            padding: 20px 16px;
-            cursor: grab;
-            user-select: none;
-        }
-
-        .handle:after,
-        .handle:before {
-            display: block;
-            content: "";
-        }
-
-        .handle:active,
-        .handle:active:before,
-        .handle:active:after {
-            cursor: grabbing;
-        }
-
-        .dropArea {
-            background-color: #f1f2f6;
-            color: black;
-            border: #ced6e0 1px solid;
-        }
-
-        .selectedTask {
-            opacity: 0.6;
-        }
 
 
         .add-link {

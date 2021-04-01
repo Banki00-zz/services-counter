@@ -2,10 +2,15 @@
 {% extends 'counter/main.html' %}
 
 {% block content %}
-<a href="{% url 'typeofwork' %}">Назад</a>
-<form method="POST">
-    {% csrf_token %}
-    <p>Точно удаляем?</p>
-    <input type="submit" value="Удалить">
-</form>
+<div class="header-bar">
+    <a style="padding: 0px; font-size: 20px; font-weight: bold;" href="{% url 'typeofwork' %}">Назад</a>
+</div>
+<div class="card-body">
+    <form method="POST">
+        {% csrf_token %}
+        <p>Точно удаляем?</p>
+        <input class="button" type="submit" value="Удалить">
+    </form>
+</div>
+
 {% endblock content %}

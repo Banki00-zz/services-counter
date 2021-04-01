@@ -1,10 +1,15 @@
 {% extends 'counter/main.html' %}
 
 {% block content %}
-<form method="POST">
-    {% csrf_token %}
-    <p>Точно удаляем?</p>
-    <input type="submit" value="Удалить">
-</form>
-<a href="{% url 'services' %}">Назад</a>
+<div class="header-bar">
+    <a style="padding: 0px; font-size: 20px; font-weight: bold;" href="{% url 'services' %}">Назад</a>
+</div>
+<div class="card-body">
+    <form method="POST">
+        {% csrf_token %}
+        <p>Точно удаляем?</p>
+        <input class="button" type="submit" value="Удалить">
+    </form>
+</div>
+
 {% endblock content %}

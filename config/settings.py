@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 from pathlib import Path
 import os
-from django.conf.locale.ru import formats as ru_formats
+import locale
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,6 +31,9 @@ DEBUG = True
 USE_I18N = True
 USE_L10N = False
 LANGUAGE_CODE = 'ru-RU'
+DATE_FORMAT = 'd m Y'
+locale.setlocale(locale.LC_ALL, "ru_RU.utf8")
+
 
 ALLOWED_HOSTS = ['*']
 
@@ -102,23 +106,23 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd1o6n4et1u9gev',
-        'USER': 'ovkzfpqboaluwu',
-        'PASSWORD': '1be33179503d9118096165a5c39ff73a47a76544d5411b2e0d69cc734813c54c',
-        'HOST': 'ec2-23-22-191-232.compute-1.amazonaws.com',
-        'PORT': '5432',
-    }
-}
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': 'db',
-#
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'd1o6n4et1u9gev',
+#         'USER': 'ovkzfpqboaluwu',
+#         'PASSWORD': '1be33179503d9118096165a5c39ff73a47a76544d5411b2e0d69cc734813c54c',
+#         'HOST': 'ec2-23-22-191-232.compute-1.amazonaws.com',
+#         'PORT': '5432',
 #     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db',
+
+    }
+}
 
 LOGIN_URL = 'login'
 

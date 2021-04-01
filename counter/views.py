@@ -1,5 +1,4 @@
-import datetime
-
+import datetime, re
 from django.db.models import Sum
 from django.shortcuts import redirect
 from django.views.generic.list import ListView
@@ -54,9 +53,16 @@ class ServicesList(LoginRequiredMixin, ListView):
         """Фильтруем услуги по пользователю и подсчет зп"""
         context = super().get_context_data(**kwargs)
         month = datetime.date.today().month
+        context['month'] = datetime.datetime.now()
         context['services'] = context['services'].filter(user=self.request.user, date_add__month=month).order_by('-date_add')
         context['count'] = Services.objects.filter(user=self.request.user, date_add__month=month).aggregate(Sum('sum_for_worker'))
 
+        search_input = self.request.GET.get('search-area') or ''
+        search_month = re.split(r'-', search_input)
+        if search_input:
+            context['services'] = context['services'].filter(user=self.request.user, date_add__month=search_month[1]).order_by('-date_add')
+            context['count'] = Services.objects.filter(user=self.request.user, date_add__month=search_month[1]).aggregate(Sum('sum_for_worker'))
+        context['search_input'] = search_input
         return context
 
 

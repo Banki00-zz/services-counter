@@ -1,20 +1,24 @@
-
 {% extends 'counter/main.html' %}
-
 {% block content %}
-<h3>Список услуг</h3>
-<td><a href="{% url 'work_create' %}">Добавить</a></td>
-<table>
-        {% for work in typeofwork %}
-    <tr>
-        <td>
-        {{work.title}}
-        </td>
-        <td><a href="{% url 'work_detail' work.id %}">Просмотреть</a></td>
-        <td><a href="{% url 'work_update' work.id %}">Изменить</a></td>
-        <td><a href="{% url 'work_delete' work.id %}">Удалить</a></td>
-    </tr>
-        {% endfor %}
-</table>
-<a href="{% url 'services' %}">Назад</a>
+<div class="header-bar">
+    <h3>Список услуг</h3>
+    <a href="{% url 'services' %}">Назад</a>
+</div>
+<div class="add-wrapper">
+     <a class="add-link" href="{% url 'work_create' %}">Добавить</a>
+</div>
+
+<div id='serviceslist' class="services-items-wrapper">
+    {% for work in typeofwork %}
+        <div class="work-wrapper" style="text-align: justify;">
+
+    {{work.title}}
+            <a class="delete-link" href="{% url 'work_delete' work.id %}">&#215</a>
+    </div>
+     <a style="padding-left: 15px;" href="{% url 'work_update' work.id %}">Изменить</a>
+
+    {% empty %}
+            <h3 align="center">Нет записей</h3>
+    {% endfor %}
+</div>
 {% endblock content %}
