@@ -1,13 +1,17 @@
 {% extends 'counter/main.html' %}
 
 {% block content %}
-<h1>Login</h1>
-
-<form method="POST">
-    {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value="Login">
-</form>
-
-<p>Нет аккаунта? <a href="{% url 'register' %}">Регистрация</a></p>
+<div class="header-bar" style="display: block; padding: 0px; margin: 0px;">
+    <h1 style="padding: 4px;">Вход</h1>
+</div>
+<div class="card-body" style="padding: 0px 0px 20px 20px;">
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <div style="display: flex;">
+            <input class="button" style="margin-right: 10px" type="submit" value="Войти">
+        </div>
+    </form>
+    <p>Еще нет аккаунта? <a href="{% url 'register' %}">Регистрация</a></p>
+</div>
 {% endblock content %}

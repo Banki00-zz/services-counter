@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator
 
 
 # Create your models here.
@@ -7,7 +8,9 @@ from django.contrib.auth.models import User
 class TypeOfWork(models.Model):
     """Вид работ(стрижка, окрашивание и т.д.)"""
     title = models.CharField(max_length=50, verbose_name="Название работ")
-    fix_percent = models.IntegerField(null=True, verbose_name="Процент от услуги")
+    fix_percent = models.IntegerField(null=True, verbose_name="Процент от услуги", validators=[
+        MinValueValidator(limit_value=1, message='Процент должен быть больше нуля')
+    ])
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):

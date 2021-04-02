@@ -31,7 +31,7 @@ class RegisterPage(FormView):
     success_url = reverse_lazy('services')
 
     def form_valid(self, form):
-        """Логирование после регистрации"""
+        """Автоматический вход после регистрации"""
         user = form.save()
         if user is not None:
             login(self.request, user)
@@ -50,7 +50,7 @@ class ServicesList(LoginRequiredMixin, ListView):
     context_object_name = 'services'
 
     def get_context_data(self, **kwargs):
-        """Фильтруем услуги по пользователю и подсчет зп"""
+        """Фильтруем услуги по пользователю и подсчет зп за выбраный месяц"""
         context = super().get_context_data(**kwargs)
         month = datetime.date.today().month
         context['month'] = datetime.datetime.now()
@@ -158,13 +158,17 @@ class TypeOfWorkDelete(LoginRequiredMixin, DeleteView):
 
 def percent_sum(request):
     typeser = TypeOfWork.objects.get(pk=request.POST['service'])
-    percent = typeser.fix_percent
+    percent = typeser.fix_percent / 100
     sum_for_service = request.POST['price']
-    end_sum = int(sum_for_service) / 100 * percent
+    end_sum = int(sum_for_service) * percent
     if request.POST.get('sale'):
         sale = request.POST['sale']
-        sum_with_sale = end_sum / 100 * int(sale)
+        sum_with_sale = end_sum * int(sale)
         end_sum = end_sum - sum_with_sale
         return end_sum
     else:
         return end_sum
+
+
+def duplicate():
+    pass

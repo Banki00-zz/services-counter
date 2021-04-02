@@ -1,5 +1,34 @@
 {% extends 'counter/main.html' %}
 {% block content %}
+<head>
+    <style>
+        .input.but {
+            border: 1px solid #EB796F;
+            background-color: #FAFAFA;
+            color: #EB796F;
+            padding: 7px 7px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            margin: 5px
+        }
+        .input.area {
+            border: 1px solid #EB796F;
+            border-radius: 5px;
+            color: #EB796F;
+            padding: 5px 5px;
+            margin: 5px;
+            cursor: pointer;
+            padding-inline-end: 0px;
+
+        }
+
+        .search-area {
+            display: flex;
+        }
+    </style>
+</head>
 <div class="header-bar">
     <div style="padding: 10px;">
         <i><a href="{% url 'services' %}" style="padding: 0px; font-size: 20px; font-weight: bold;">Привет {{request.user}}</a></i>
@@ -19,15 +48,22 @@
 </div>
 
 <div class="add-wrapper">
-        <a class="add-link" href="{% url 'create-service' %}">Добавить</a>
-    <div class="search-area">
-        <form method="GET" >
-            <input type="month" name="search-area" value="{{search_input}}">
-            <input style="margin: 0px 5px" type="submit" value="Поиск">
-        </form>
-    </div>
-        <a class="add-link" href="{% url 'typeofwork' %}">Список услуг</a>
-
+    <table align="center">
+        <tr>
+            <td width="" align="center"><a class="add-link" href="{% url 'create-service' %}">Новая запись</a></td>
+            <td width="" align="center"><a class="add-link" href="{% url 'typeofwork' %}">Список услуг</a></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="search-area">
+                    <form method="GET" style="display: flex;">
+                        <input class="input area" type="month" width="200" name="search-area" value="{{search_input}}">
+                        <input class="input but" type="submit" value="Просморт">
+                    </form>
+                </div>
+            </td>
+        </tr>
+    </table>
 </div>
 
 
@@ -45,8 +81,8 @@
             <a class="delete-link" href="{% url 'service-delete' service.id %}">&#215</a>
         </div>
         <div class="services-settings">
-<!--            <a href="{% url 'service' service.id %}">Просмотреть</a>-->
             <a href="{% url 'service-update' service.id %}">Изменить</a>
+            <a href="#">Дублировать</a>
         </div>
     {% empty %}
     <h3 align="center">Нет записей</h3>

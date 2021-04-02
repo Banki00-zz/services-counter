@@ -12,7 +12,8 @@
     {% for work in typeofwork %}
         <div class="work-wrapper" style="text-align: justify;">
 
-    {{work.title}}
+    {{work.title}} |
+    {{work.fix_percent}} %
             <a class="delete-link" href="{% url 'work_delete' work.id %}">&#215</a>
     </div>
      <a style="padding-left: 15px;" href="{% url 'work_update' work.id %}">Изменить</a>
