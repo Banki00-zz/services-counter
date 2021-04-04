@@ -30,9 +30,9 @@
     <div style="padding: 10px;">
         <i><a href="{% url 'services' %}" style="padding: 0px; font-size: 20px; font-weight: bold;">Привет {{request.user}}</a></i>
         {% if count.sum_for_worker__sum == None%}
-        <h3 style="margin: 0;"><i>Сумма за месяц: 0 р.</i></h3>
+        <h3 style="margin: 0;"><i>Сумма за {{word}}: 0 р.</i></h3>
         {% else %}
-        <h3 style="margin: 0;"><i>Сумма за месяц: {{count.sum_for_worker__sum}} р.</i></h3>
+        <h3 style="margin: 0;"><i>Сумма за {{word}}: {{count.sum_for_worker__sum}} р.</i></h3>
         {% endif %}
     </div>
     <div class="header-log">
@@ -60,12 +60,22 @@
                 </div>
             </td>
         </tr>
+        <tr>
+            <td colspan="2">
+                <div class="search-area">
+                    <form method="GET" style="display: flex; align-items: center;">
+                        <input class="input area" type="date" width="200" name="day-search-area" value="{{day_search_input}}">
+                        <input class="input but" type="submit" value="За день">
+                    </form>
+                </div>
+            </td>
+        </tr>
     </table>
 </div>
 
 
 <div id='serviceslist' class="services-items-wrapper">
-    {% for service in services %}
+    {% for service in all_services %}
         <div class="services-wrapper" style="text-align: justify;">
             {{service}} | Дата добавления: {{service.date_add|date:"d E y"}}<br>
             Цена: {{service.price}} р.<br>
@@ -85,7 +95,7 @@
     <h3 align="center">Нет записей</h3>
     {% endfor %}
 </div>
-<a href="{% url 'all_services' %}" class="text-head" style="text-align: center; border-top: 1px solid #dfe4ea; display: block;">Развернуть список</a>
+<a href="{% url 'services' %}" class="text-head" style="text-align: center; border-top: 1px solid #dfe4ea; display: block;">Свернуть список</a>
 
 {% endblock content %}
 

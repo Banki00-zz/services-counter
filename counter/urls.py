@@ -8,6 +8,7 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
     path('register/', RegisterPage.as_view(), name='register'),
     path('', ServicesList.as_view(), name="services"),
+    path('all_services/', AllServicesList.as_view(), name="all_services"),
     path('services/<int:pk>/', ServicesDetail.as_view(), name="service"),
     path('service-update/<int:pk>/', ServicesUpdate.as_view(), name="service-update"),
     path('service-delete/<int:pk>/', ServicesDelete.as_view(), name="service-delete"),

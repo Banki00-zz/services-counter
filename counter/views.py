@@ -53,16 +53,50 @@ class ServicesList(LoginRequiredMixin, ListView):
         """Фильтруем услуги по пользователю и подсчет зп за выбраный месяц"""
         context = super().get_context_data(**kwargs)
         month = datetime.date.today().month
-        context['month'] = datetime.datetime.now()
-        context['services'] = context['services'].filter(user=self.request.user, date_add__month=month).order_by('-date_add')
+        context['services'] = context['services'].filter(user=self.request.user, date_add__month=month).order_by('-date_add')[:5]
         context['count'] = Services.objects.filter(user=self.request.user, date_add__month=month).aggregate(Sum('sum_for_worker'))
+        search_input = self.request.GET.get('search-area')
 
-        search_input = self.request.GET.get('search-area') or ''
-        search_month = re.split(r'-', search_input)
         if search_input:
-            context['services'] = context['services'].filter(user=self.request.user, date_add__month=search_month[1]).order_by('-date_add')
-            context['count'] = Services.objects.filter(user=self.request.user, date_add__month=search_month[1]).aggregate(Sum('sum_for_worker'))
-        context['search_input'] = search_input
+            value = re.split(r'-', search_input)[1]
+            context['services'] = Services.objects.filter(user=self.request.user, date_add__month=value).order_by('-date_add')[:5]
+            context['count'] = Services.objects.filter(user=self.request.user, date_add__month=value).aggregate(Sum('sum_for_worker'))
+            context['search_input'] = search_input
+            context['word'] = 'месяц'
+            return context
+        return context
+
+
+class AllServicesList(LoginRequiredMixin, ListView):
+    model = Services
+    context_object_name = 'all_services'
+    template_name = 'counter/all_services_list.html'
+
+    def get_context_data(self, **kwargs):
+        """Фильтруем услуги по пользователю и подсчет зп за выбраный месяц"""
+        context = super().get_context_data(**kwargs)
+        value = datetime.date.today().month
+        search_input = self.request.GET.get('search-area')
+        day_search_input = self.request.GET.get('day-search-area')
+        context['word'] = 'месяц'
+
+        if search_input:
+            value = re.split(r'-', search_input)[1]
+            context['search_input'] = search_input
+            context['word'] = 'месяц'
+
+        elif day_search_input:
+            value = re.split(r'-', day_search_input)[2]
+            context['all_services'] = context['all_services'].filter(user=self.request.user,
+                                                                     date_add__day=value).order_by('-date_add')
+            context['count'] = Services.objects.filter(user=self.request.user, date_add__day=value).aggregate(
+                Sum('sum_for_worker'))
+            context['day_search_input'] = day_search_input
+            context['word'] = 'день'
+            return context
+        context['all_services'] = context['all_services'].filter(user=self.request.user, date_add__month=value).order_by('-date_add')
+        context['count'] = Services.objects.filter(user=self.request.user, date_add__month=value).aggregate(Sum('sum_for_worker'))
+
         return context
 
 
@@ -163,12 +197,8 @@ def percent_sum(request):
     end_sum = int(sum_for_service) * percent
     if request.POST.get('sale'):
         sale = request.POST['sale']
-        sum_with_sale = end_sum * int(sale)
+        sum_with_sale = end_sum * int(sale) / 100
         end_sum = end_sum - sum_with_sale
         return end_sum
     else:
         return end_sum
-
-
-def duplicate():
-    pass
